@@ -1,0 +1,439 @@
+
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                git branch: 'main',
+                    url: 'https://github.com/Lavanya22990/MyProject.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo 'Building MyProject...'
+                bat 'dir'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'Testing MyProject...'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Deployment completed.'
+            }
+        }
+    }
+}
+======================================================================
+
+git init
+git add .
+git commit -m "Initial commit"
+git branch -M main
+git remote add origin https://github.com/Lavanya22990/MyProject.git
+git remote -v
+git push -u origin main
+
+git add .
+git commit -m "Updated project"
+git push
+git pull origin main
+
+=======================================================================
+
+cd desktop
+git clone <URL>
+$ echo "# College Management System" > README.md
+$ git add README.md
+$ git commit -m ""
+$ git remote add origin <URL>
+$ git remote -v
+$ $ git push -u origin main
+$ git checkout -b develop
+$ git push -u origin develop
+$ git checkout -b feature/student
+
+$ git branch
+  develop
+ *feature/student
+  main
+
+$ git add code.py
+$ git commit -m "Add student management functions"
+$ git push -u origin feature/student
+
+===================================================================
+
+
+# 1. Check current branch and status
+git status
+git branch
+
+# 2. Switch to develop and get the latest changes
+git checkout develop
+git pull origin develop
+
+# --------------------------------------------------
+# 3. CREATE FEATURE BRANCH: feature/user-auth
+# --------------------------------------------------
+
+# Create the feature branch from develop
+git checkout -b feature/user-auth
+
+# Create the authentication file
+touch user_auth.py
+
+# Open the file and add your authentication code
+code user_auth.py
+
+# Example code:
+# users = {
+#     "admin": "1234"
+# }
+#
+# def login(username, password):
+#     if username in users and users[username] == password:
+#         return "Login successful"
+#     return "Invalid username or password"
+
+# Check the changes
+git status
+
+# Stage the file
+git add user_auth.py
+
+# Commit the feature
+git commit -m "Add user authentication"
+
+# Push the feature branch to GitHub
+git push -u origin feature/user-auth
+
+
+# --------------------------------------------------
+# 4. MERGE feature/user-auth INTO develop
+# --------------------------------------------------
+
+# Switch back to develop
+git checkout develop
+
+# Get latest develop
+git pull origin develop
+
+# Merge the feature branch
+git merge feature/user-auth
+
+# Push updated develop
+git push origin develop
+
+
+# --------------------------------------------------
+# 5. CREATE A FILE FOR THE MERGE CONFLICT
+# --------------------------------------------------
+
+# Create config.txt
+touch config.txt
+
+# Open it
+code config.txt
+
+# Put this inside:
+# Application = College Management System
+# Version = 1.0
+
+# Save the file, then stage it
+git add config.txt
+
+# Commit it
+git commit -m "Add application configuration"
+
+# Push develop
+git push origin develop
+
+
+# --------------------------------------------------
+# 6. MODIFY config.txt IN feature/user-auth
+#    (First side of the conflict)
+# --------------------------------------------------
+
+# Switch to feature/user-auth
+git checkout feature/user-auth
+
+# Get latest changes from develop
+git merge develop
+
+# Open config.txt
+code config.txt
+
+# Change:
+# Version = 1.0
+#
+# to:
+# Version = 1.1
+
+# Save the file
+
+# Stage and commit
+git add config.txt
+git commit -m "Update application version"
+
+# Push feature branch
+git push origin feature/user-auth
+
+
+# --------------------------------------------------
+# 7. MAKE A DIFFERENT CHANGE IN develop
+#    (Second side of the conflict)
+# --------------------------------------------------
+
+# Switch to develop
+git checkout develop
+
+# Open config.txt
+code config.txt
+
+# Change:
+# Version = 1.0
+#
+# to:
+# Version = 2.0
+
+# Save the file
+
+# Stage and commit
+git add config.txt
+git commit -m "Update configuration version"
+
+
+# --------------------------------------------------
+# 8. DELIBERATELY CREATE THE MERGE CONFLICT
+# --------------------------------------------------
+
+# Try to merge feature/user-auth into develop
+git merge feature/user-auth
+
+# Git should show something like:
+# CONFLICT (content): Merge conflict in config.txt
+# Automatic merge failed; fix conflicts and then commit the result.
+
+
+# --------------------------------------------------
+# 9. RESOLVE THE MERGE CONFLICT
+# --------------------------------------------------
+
+# Open the conflicting file
+code config.txt
+
+# You will see something similar to:
+#
+# Application = College Management System
+# <<<<<<< HEAD
+# Version = 2.0
+# =======
+# Version = 1.1
+# >>>>>>> feature/user-auth
+#
+# Choose one version.
+# For example, keep:
+#
+# Application = College Management System
+# Version = 1.1
+#
+# IMPORTANT:
+# Delete these conflict markers:
+# <<<<<<< HEAD
+# =======
+# >>>>>>> feature/user-auth
+
+# Save the file
+
+# Stage the resolved file
+git add config.txt
+
+# Complete the merge
+git commit -m "Resolve merge conflict in configuration"
+
+# Push the resolved develop branch
+git push origin develop
+
+
+# --------------------------------------------------
+# 10. CREATE RELEASE BRANCH: release/1.0
+# --------------------------------------------------
+
+# Make sure you are on develop
+git checkout develop
+
+# Get latest develop
+git pull origin develop
+
+# Create release branch
+git checkout -b release/1.0
+
+# Push release branch to GitHub
+git push -u origin release/1.0
+
+
+# --------------------------------------------------
+# 11. CREATE RELEASE TAG v1.0
+# --------------------------------------------------
+
+# Make sure you are on release/1.0
+git checkout release/1.0
+
+# Create an annotated tag
+git tag -a v1.0 -m "Release version 1.0"
+
+# Check the tag
+git tag
+
+# Push the tag to GitHub
+git push origin v1.0
+
+
+# --------------------------------------------------
+# 12. MERGE release/1.0 INTO main
+# --------------------------------------------------
+
+# Switch to main
+git checkout main
+
+# Get latest main
+git pull origin main
+
+# Merge release branch
+git merge release/1.0
+
+# Push main
+git push origin main
+
+
+# --------------------------------------------------
+# 13. CREATE HOTFIX BRANCH: hotfix/login-bug
+# --------------------------------------------------
+
+# Make sure you are on main
+git checkout main
+
+# Get latest main
+git pull origin main
+
+# Create hotfix branch from main
+git checkout -b hotfix/login-bug
+
+
+# --------------------------------------------------
+# 14. FIX THE LOGIN BUG
+# --------------------------------------------------
+
+# Open user_auth.py
+code user_auth.py
+
+# Example corrected code:
+#
+# users = {
+#     "admin": "1234"
+# }
+#
+# def login(username, password):
+#     username = username.strip()
+#
+#     if username in users and users[username] == password:
+#         return "Login successful"
+#
+#     return "Invalid username or password"
+
+# Save the file
+
+# Stage the fix
+git add user_auth.py
+
+# Commit the hotfix
+git commit -m "Fix login validation bug"
+
+# Push hotfix branch
+git push -u origin hotfix/login-bug
+
+
+# --------------------------------------------------
+# 15. MERGE HOTFIX INTO main
+# --------------------------------------------------
+
+# Switch to main
+git checkout main
+
+# Get latest main
+git pull origin main
+
+# Merge hotfix
+git merge hotfix/login-bug
+
+# Push main
+git push origin main
+
+
+# --------------------------------------------------
+# 16. MERGE HOTFIX INTO develop
+# --------------------------------------------------
+
+# Switch to develop
+git checkout develop
+
+# Get latest develop
+git pull origin develop
+
+# Merge hotfix
+git merge hotfix/login-bug
+
+# Push develop
+git push origin develop
+
+
+# --------------------------------------------------
+# 17. CHECK ALL LOCAL BRANCHES
+# --------------------------------------------------
+
+git branch
+
+
+# --------------------------------------------------
+# 18. CHECK ALL REMOTE BRANCHES
+# --------------------------------------------------
+
+git branch -a
+
+
+# --------------------------------------------------
+# 19. CHECK RELEASE TAG
+# --------------------------------------------------
+
+git tag
+
+=======================================================================
+
+
+develop
+   ↓
+feature/user-auth
+   ↓
+merge → develop
+   ↓
+release/1.0
+   ↓
+tag v1.0
+   ↓
+main
+
+main
+ ↓
+hotfix/login-bug
+ ↓
+merge → main
+ ↓
+merge → develop
